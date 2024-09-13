@@ -3,6 +3,7 @@ from constants import *
 from player import *
 from asteroid import *
 from asteroidfield import *
+from scoreboard import ScoreBoard
 from shot import *
 
 def main():
@@ -24,6 +25,8 @@ def main():
 
     Shot.containers = (shots, updatable, drawable)
 
+    score_board = ScoreBoard(screen) 
+
     dt = 0
 
     while True:
@@ -32,6 +35,7 @@ def main():
                 return 
 
         screen.fill("black")
+        score_board.draw(screen)
 
         for item in updatable:
             item.update(dt)
@@ -45,6 +49,7 @@ def main():
                 if asteroid.check_collision(bullet):
                     bullet.kill()
                     asteroid.split()
+                    score_board.update_score()
 
         for item in drawable:
             item.draw(screen)
