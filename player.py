@@ -4,10 +4,11 @@ import constants
 import shot
 
 class Player(circleshape.CircleShape):
-    def __init__(self, x, y):
+    def __init__(self, x, y, lives):
         super().__init__(x, y, constants.PLAYER_RADIUS)
         self.rotation = 180
         self.shot_cooldown = 0
+        self.lives = lives 
 
     def draw(self, screen):
         pygame.draw.polygon(screen, "white", self.triangle(), 2)
@@ -51,3 +52,13 @@ class Player(circleshape.CircleShape):
         bullet = shot.Shot(self.position.x, self.position.y, constants.SHOT_RADIUS)
         bullet.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * constants.PLAYER_SHOT_SPEED
         self.shot_cooldown = constants.PLAYER_SHOT_COOLDOWN
+
+    def respawn(self):
+        self.lives -= 1
+        self.position = pygame.Vector2(constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2)
+
+    def draw_lives(self, screen):
+        font = pygame.font.Font(None, 36)
+        text = font.render(str(self.lives), True, "red")
+        screen.blit(text, (50, 10))
+        

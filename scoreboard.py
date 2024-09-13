@@ -9,7 +9,6 @@ class ScoreBoard():
 
     def draw(self, screen):
         text = self.font.render(str(self.scores), True, "red")
-        textpos = text.get_rect(centerx=constants.SCREEN_WIDTH / 2, y=10)
         screen.blit(text, (10, 10))
 
     # def update(self):
